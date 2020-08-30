@@ -3,11 +3,11 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: 闪耀灵魂的圣人骗子
 subtitle: ''
 description: ''
-keywords:
-author: John Doe
+keywords: xianggua,xianggua's Blog
+author: xianggua
 language: en
 timezone: ''
 
@@ -106,3 +106,43 @@ deploy:
   type: git
   repo: https://github.com/jiaoyueyue/jiaoyueyue.github.io.git
   branch: master
+
+
+jsonContent:
+  meta: true
+  drafts: false
+  file: content.json
+  keywords: xianggua xianggua‘blog
+  dateFormat: undefined
+  pages:
+    title: true
+    slug: true
+    date: true
+    updated: true
+    comments: true
+    path: true
+    link: true
+    permalink: true
+    excerpt: true
+    keywords: false
+    text: true
+    raw: false
+    content: false
+    author: true
+  posts:
+    title: true
+    slug: true
+    date: true
+    updated: true
+    comments: true
+    path: true
+    link: true
+    permalink: true
+    excerpt: true
+    keywords: false
+    text: true
+    raw: false
+    content: false
+    author: true
+    categories: true
+    tags: true
