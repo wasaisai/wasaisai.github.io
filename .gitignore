@@ -83,6 +83,8 @@ content.json
 index.html
 !knowledge/index.html
 !reading/index.html
+!ideas/index.html
+!work/index.html
 db.json
 manifest.json
 node_modules/

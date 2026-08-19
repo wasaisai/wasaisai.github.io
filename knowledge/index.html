@@ -9,18 +9,185 @@
   <link rel="manifest" href="/manifest.json" />
   <link rel="shortcut icon" href="/favicon.ico" />
   <title>香瓜 · 知识库</title>
-  <meta name="description" content="香瓜的公开知识库：精选条目、主题索引和浏览规则。" />
+  <meta name="description" content="香瓜的公开知识库：左侧导航、精选条目和主题索引。" />
   <link rel="stylesheet" href="/css/home.css" />
   <style>
-    .knowledge-intro {
-      max-width: 56rem;
+    .knowledge-hero {
+      padding-bottom: 2.25rem;
+    }
+
+    .knowledge-layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+      padding-bottom: 2rem;
+    }
+
+    .knowledge-sidebar {
+      position: sticky;
+      top: 92px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .sidebar-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--card);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sidebar-card h3 {
+      margin: 0 0 10px;
+      font-family: var(--font-serif);
+      font-size: 1rem;
+    }
+
+    .sidebar-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: 10px 12px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      line-height: 1.45;
+      transition: background 180ms var(--ease-out-expo), border-color 180ms var(--ease-out-expo), color 180ms var(--ease-out-expo);
+    }
+
+    .sidebar-link:hover,
+    .sidebar-link:focus-visible {
+      background: rgba(255, 255, 255, 0.65);
+      border-color: var(--line);
+      color: var(--ink);
+    }
+
+    .sidebar-link.is-active {
+      background: rgba(255, 255, 255, 0.88);
+      border-color: rgba(184, 84, 47, 0.28);
+      color: var(--ink);
+      box-shadow: 0 10px 28px rgba(35, 41, 33, 0.05);
+    }
+
+    .sidebar-link strong {
+      display: block;
+      margin-bottom: 3px;
+      font-weight: 600;
+    }
+
+    .sidebar-link span {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .sidebar-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+
+    .knowledge-main {
+      min-width: 0;
+    }
+
+    .detail-card {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--card);
+      box-shadow: var(--shadow-md);
+      margin-bottom: 26px;
+    }
+
+    .detail-top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .detail-badge {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--paper-deep);
+      color: var(--muted);
+      font-size: 0.74rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .detail-title {
+      margin: 0 0 10px;
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 3.3vw, 2.6rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .detail-summary {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.75;
+      max-width: 52rem;
+    }
+
+    .detail-copy {
+      margin: 0 0 18px;
+      color: var(--ink);
+      line-height: 1.75;
+      max-width: 52rem;
+    }
+
+    .detail-list {
+      margin: 0;
+      padding-left: 1.15rem;
+      color: var(--ink);
+      line-height: 1.8;
+    }
+
+    .knowledge-section {
+      margin-bottom: 30px;
+    }
+
+    .knowledge-section .section-head {
+      margin-bottom: 16px;
+    }
+
+    .knowledge-section .topic-card {
+      transition: transform 220ms var(--ease-out-expo), border-color 220ms var(--ease-out-expo);
+    }
+
+    .knowledge-section .topic-card:hover,
+    .knowledge-section .topic-card:focus-visible {
+      transform: translateY(-3px);
+      border-color: rgba(184, 84, 47, 0.28);
+    }
+
+    .mini-rule {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .mini-rule strong {
+      color: var(--ink);
     }
 
     .knowledge-meta {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 22px;
+      margin-top: 18px;
     }
 
     .knowledge-meta span {
@@ -32,75 +199,19 @@
       font-size: 0.8rem;
     }
 
-    .section-intro {
-      max-width: 46rem;
-      color: var(--muted);
-      line-height: 1.7;
-      margin: 0 0 20px;
-    }
+    @media (max-width: 960px) {
+      .knowledge-layout {
+        grid-template-columns: 1fr;
+      }
 
-    .quick-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    .quick-links .button {
-      background: transparent;
-    }
-
-    .quick-links .button.primary {
-      background: var(--ink);
-      color: var(--paper);
-    }
-
-    .topic-grid {
-      margin-bottom: 22px;
-    }
-
-    .compact-list {
-      display: grid;
-      gap: 12px;
-      margin-top: 10px;
-    }
-
-    .compact-item {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 16px 18px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--card);
-    }
-
-    .compact-item strong {
-      display: block;
-      margin-bottom: 4px;
-      font-family: var(--font-serif);
-      font-size: 1rem;
-    }
-
-    .compact-item p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 0.92rem;
-    }
-
-    .compact-tag {
-      white-space: nowrap;
-      color: var(--blue);
-      font-size: 0.72rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-top: 2px;
+      .knowledge-sidebar {
+        position: static;
+      }
     }
 
     @media (max-width: 768px) {
-      .compact-item {
-        flex-direction: column;
+      .detail-card {
+        padding: 22px;
       }
     }
   </style>
@@ -116,133 +227,190 @@
       </button>
       <div class="nav-links" id="navLinks">
         <a href="/">首页</a>
-        <a href="#featured">精选条目</a>
+        <a href="#selected">精选条目</a>
         <a href="#topics">主题索引</a>
         <a href="#rules">浏览规则</a>
       </div>
     </nav>
 
-    <header class="hero knowledge-intro">
+    <header class="hero knowledge-hero">
       <p class="eyebrow">Knowledge index</p>
       <h1>知识库</h1>
       <p class="hero-lead">
-        这里放的是便捷访问、浏览和索引的公开入口。公开层只保留精选条目和主题索引，
-        更完整的条目和观察放在本地 Notion 知识库。
+        这里是一个更快的入口：左边选条目，中间看内容，下面再看主题索引和浏览规则。
+        公开层只放精选条目，不把首页那套东西重复一遍。
       </p>
       <div class="knowledge-meta" id="knowledgeMeta">
         <span>精选条目</span>
         <span>主题索引</span>
         <span>快速浏览</span>
       </div>
-      <div class="quick-links">
-        <a class="button primary" href="#featured">看精选条目</a>
-        <a class="button" href="#topics">看主题索引</a>
-        <a class="button" href="/">回首页</a>
-      </div>
     </header>
 
-    <section class="section" id="featured">
-      <div class="section-head">
-        <h2>精选条目</h2>
-        <p class="section-note">优先放技术和深度话题，适合快速浏览与继续下钻。</p>
-      </div>
-      <div class="card-grid" id="featuredGrid">
-        <p class="topic-status">正在加载精选条目…</p>
-      </div>
-    </section>
+    <section class="knowledge-layout">
+      <aside class="knowledge-sidebar">
+        <div class="sidebar-card">
+          <h3>精选条目</h3>
+          <div class="sidebar-list" id="sidebarList">
+            <p class="sidebar-note">正在加载条目…</p>
+          </div>
+        </div>
+        <div class="sidebar-card">
+          <h3>浏览提示</h3>
+          <p class="sidebar-note">
+            点击左侧条目后，中间会显示对应内容。这个页只负责索引和浏览，不做展板式堆叠。
+          </p>
+        </div>
+      </aside>
 
-    <section class="section" id="topics">
-      <div class="section-head">
-        <h2>主题索引</h2>
-        <p class="section-note">公开知识地图里的主题，用来快速定位内容方向。</p>
-      </div>
-      <div class="topic-grid" id="topicGrid">
-        <p class="topic-status">正在加载主题…</p>
-      </div>
-    </section>
+      <main class="knowledge-main">
+        <article class="detail-card" id="selected">
+          <div class="detail-top">
+            <span class="detail-badge" id="selectedCategory">精选条目</span>
+            <span class="detail-badge" id="selectedTopic">主题</span>
+          </div>
+          <h2 class="detail-title" id="selectedTitle">正在加载内容…</h2>
+          <p class="detail-summary" id="selectedSummary"></p>
+          <p class="detail-copy" id="selectedDetails"></p>
+          <ul class="detail-list" id="selectedHighlights"></ul>
+        </article>
 
-    <section class="section" id="timeline">
-      <div class="section-head">
-        <h2>演进记录</h2>
-        <p class="section-note">这部分只保留最必要的时间线，不把页面做成展板。</p>
-      </div>
-      <div class="compact-list" id="timelineList"></div>
-    </section>
+        <section class="section knowledge-section" id="topics">
+          <div class="section-head">
+            <h2>主题索引</h2>
+            <p class="section-note">公开地图里的主题，用来快速定位内容方向。</p>
+          </div>
+          <div class="topic-grid" id="topicGrid">
+            <p class="topic-status">正在加载主题…</p>
+          </div>
+        </section>
 
-    <section class="section" id="rules">
-      <div class="section-head">
-        <h2>浏览规则</h2>
-        <p class="section-note">知识库页的原则是便捷访问、浏览、索引，不是堆信息。</p>
-      </div>
-      <div class="card-grid" id="ruleGrid"></div>
+        <section class="section knowledge-section" id="rules">
+          <div class="section-head">
+            <h2>浏览规则</h2>
+            <p class="section-note">知识库页的原则是便捷访问、浏览、索引，而不是把信息堆满。</p>
+          </div>
+          <div class="card-grid" id="ruleGrid"></div>
+        </section>
+      </main>
     </section>
 
     <footer class="footer">
       <div>数据源：<code>/data/knowledge-public.json</code></div>
       <div class="footer-links">
         <a href="/">首页</a>
-        <a href="#featured">精选条目</a>
+        <a href="#selected">精选条目</a>
         <a href="#topics">主题索引</a>
       </div>
     </footer>
   </div>
 
-  <script src="/js/home.js" defer></script>
   <script>
-    async function loadKnowledge() {
-      const response = await fetch('/data/knowledge-public.json');
-      const data = await response.json();
-      document.title = `${data.profile.name} · ${data.profile.title}`;
-
-      const meta = document.querySelector('#knowledgeMeta');
-      meta.innerHTML = `
-        <span>${data.featured.length} 条精选</span>
-        <span>${data.topics.length} 个主题</span>
-        <span>更新于 ${data.profile.updatedAt}</span>
-      `;
-
-      document.querySelector('#featuredGrid').innerHTML = data.featured.map((item) => `
-        <article class="card">
-          <span class="tag">${item.category}</span>
-          <h3>${item.title}</h3>
-          <p class="card-meta">主题 · ${item.topic}</p>
-          <p class="card-body">${item.summary}</p>
-        </article>
-      `).join('');
-
-      document.querySelector('#topicGrid').innerHTML = data.topics.map((topic) => `
-        <article class="topic-card">
-          <div class="topic-card-head">
-            <strong>${topic.name}</strong>
-            <span class="topic-type">${topic.type}</span>
-          </div>
-          <div class="topic-bar-track">
-            <div class="topic-bar-fill" style="width: ${topic.weight}%"></div>
-          </div>
-          <p class="topic-note">${topic.note}</p>
-        </article>
-      `).join('');
-
-      document.querySelector('#timelineList').innerHTML = data.timeline.map((item) => `
-        <article class="compact-item">
-          <div>
-            <strong>${item.title}</strong>
-            <p>${item.text}</p>
-          </div>
-          <div class="compact-tag">${item.date}</div>
-        </article>
-      `).join('');
-
-      document.querySelector('#ruleGrid').innerHTML = data.rules.map((rule) => `
-        <article class="card">
-          <p class="card-body">${rule}</p>
-        </article>
-      `).join('');
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
     }
 
-    loadKnowledge().catch(() => {
-      document.querySelector('#featuredGrid').innerHTML = '<p class="topic-status">知识库数据暂时无法加载，请稍后再试。</p>';
-    });
+    function getSelectedId() {
+      var params = new URLSearchParams(window.location.search);
+      return params.get('item') || '';
+    }
+
+    function renderSidebar(items, selectedId) {
+      var sidebar = document.getElementById('sidebarList');
+      sidebar.innerHTML = items.map(function (item) {
+        var active = item.id === selectedId ? ' is-active' : '';
+        return '' +
+          '<a class="sidebar-link' + active + '" href="?item=' + encodeURIComponent(item.id) + '#selected">' +
+          '<strong>' + escapeHtml(item.title) + '</strong>' +
+          '<span>' + escapeHtml(item.category) + ' · ' + escapeHtml(item.topic) + '</span>' +
+          '</a>';
+      }).join('');
+    }
+
+    function renderSelected(item) {
+      document.getElementById('selectedCategory').textContent = item.category || '精选条目';
+      document.getElementById('selectedTopic').textContent = item.topic || '主题';
+      document.getElementById('selectedTitle').textContent = item.title || '';
+      document.getElementById('selectedSummary').textContent = item.summary || '';
+      document.getElementById('selectedDetails').textContent = item.details || '';
+      document.getElementById('selectedHighlights').innerHTML = (item.highlights || []).map(function (point) {
+        return '<li>' + escapeHtml(point) + '</li>';
+      }).join('');
+    }
+
+    function renderTopics(topics) {
+      var grid = document.getElementById('topicGrid');
+      var maxWeight = topics.reduce(function (max, topic) {
+        return Math.max(max, topic.weight || 0);
+      }, 1);
+
+      grid.innerHTML = topics.map(function (topic) {
+        var fill = Math.max(6, Math.round(((topic.weight || 0) / maxWeight) * 100));
+        return '' +
+          '<article class="topic-card">' +
+          '<div class="topic-card-head">' +
+          '<strong>' + escapeHtml(topic.name || '') + '</strong>' +
+          '<span class="topic-type">' + escapeHtml(topic.type || '') + '</span>' +
+          '</div>' +
+          '<div class="topic-bar-track"><div class="topic-bar-fill" style="width:' + fill + '%"></div></div>' +
+          '<p class="topic-note">' + escapeHtml(topic.note || '') + '</p>' +
+          '</article>';
+      }).join('');
+    }
+
+    function renderRules(rules) {
+      var grid = document.getElementById('ruleGrid');
+      grid.innerHTML = rules.map(function (rule) {
+        return '<article class="card"><p class="card-body mini-rule">' + escapeHtml(rule) + '</p></article>';
+      }).join('');
+    }
+
+    function loadKnowledge() {
+      fetch('/data/knowledge-public.json')
+        .then(function (response) {
+          if (!response.ok) throw new Error('Failed to load knowledge data');
+          return response.json();
+        })
+        .then(function (data) {
+          var items = Array.isArray(data.featured) ? data.featured.slice() : [];
+          if (!items.length) {
+            items = [];
+          }
+          if (!items.length) {
+            document.getElementById('sidebarList').innerHTML = '<p class="sidebar-note">暂无精选条目。</p>';
+            return;
+          }
+
+          var selectedId = getSelectedId();
+          var selected = items.find(function (item) {
+            return item.id === selectedId;
+          }) || items[0];
+
+          document.title = data.profile.name + ' · ' + data.profile.title;
+          document.getElementById('knowledgeMeta').innerHTML = '' +
+            '<span>' + items.length + ' 条精选</span>' +
+            '<span>' + data.topics.length + ' 个主题</span>' +
+            '<span>更新于 ' + escapeHtml(data.profile.updatedAt) + '</span>';
+
+          renderSidebar(items, selected.id);
+          renderSelected(selected);
+          renderTopics(data.topics || []);
+          renderRules(data.rules || []);
+        })
+        .catch(function () {
+          document.getElementById('sidebarList').innerHTML = '<p class="sidebar-note">知识库数据加载失败，请稍后重试。</p>';
+          document.getElementById('selectedTitle').textContent = '数据加载失败';
+          document.getElementById('selectedSummary').textContent = '';
+          document.getElementById('selectedDetails').textContent = '';
+          document.getElementById('selectedHighlights').innerHTML = '';
+        });
+    }
+
+    loadKnowledge();
   </script>
+  <script src="/js/home.js" defer></script>
 </body>
 </html>

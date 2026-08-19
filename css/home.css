@@ -320,6 +320,19 @@ a {
   background: var(--card);
 }
 
+.topic-card.knowledge-card {
+  display: block;
+  text-decoration: none;
+  transition: transform 220ms var(--ease-out-expo), box-shadow 220ms var(--ease-out-expo), border-color 220ms var(--ease-out-expo);
+}
+
+.topic-card.knowledge-card:hover,
+.topic-card.knowledge-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(184, 84, 47, 0.28);
+  box-shadow: var(--shadow-sm);
+}
+
 .topic-card-head {
   display: flex;
   align-items: baseline;
