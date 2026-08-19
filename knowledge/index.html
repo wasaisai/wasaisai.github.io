@@ -14,27 +14,100 @@
   <style>
     .knowledge-layout {
       display: grid;
-      grid-template-columns: 280px minmax(0, 1fr);
-      gap: 24px;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: clamp(36px, 7vw, 80px);
       align-items: start;
-      padding-top: 1rem;
-      padding-bottom: 2rem;
+      padding-top: clamp(54px, 8vw, 90px);
+      padding-bottom: 4rem;
+    }
+
+    .knowledge-sidebar {
+      position: sticky;
+      top: 40px;
+      display: grid;
+      gap: 22px;
+      padding-top: 4px;
+    }
+
+    .side-home {
+      color: var(--muted);
+      text-decoration: none;
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+    }
+
+    .side-home:hover,
+    .side-home:focus-visible {
+      color: var(--cinnabar);
+    }
+
+    .side-links {
+      display: grid;
+      gap: 10px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .side-links a {
+      width: fit-content;
+      padding: 10px 14px;
+      border-radius: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .side-links a.is-active {
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--cinnabar);
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
     }
 
     .topic-strip {
-      padding: 18px 0 8px;
+      min-width: 0;
+      padding: 0 0 18px;
     }
 
-    .topic-strip .section-head {
-      margin-bottom: 10px;
+    .knowledge-topline {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 22px;
+      align-items: start;
+      margin-bottom: 28px;
     }
 
-    .topic-strip .section-head h2 {
+    .topic-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .topic-head h2 {
+      margin: 0;
+      font-family: var(--font-serif);
       font-size: 1rem;
+      white-space: nowrap;
     }
 
-    .topic-strip .section-note {
-      display: none;
+    .top-links {
+      display: flex;
+      gap: 16px;
+      padding-top: 2px;
+      white-space: nowrap;
+    }
+
+    .top-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.86rem;
+    }
+
+    .top-links a:hover,
+    .top-links a:focus-visible {
+      color: var(--cinnabar);
     }
 
     .topic-strip .topic-grid {
@@ -58,8 +131,9 @@
     }
 
     .topic-strip .topic-card {
-      flex: 0 0 210px;
-      padding: 12px 14px;
+      flex: 0 0 auto;
+      min-width: 132px;
+      padding: 10px 14px;
       scroll-snap-align: start;
     }
 
@@ -71,35 +145,31 @@
       margin-bottom: 8px;
     }
 
-    .knowledge-sidebar {
-      position: sticky;
-      top: 92px;
-      display: grid;
-      gap: 14px;
+    .topic-strip .topic-bar-track {
+      display: none;
     }
 
     .sidebar-card {
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: var(--card);
-      box-shadow: var(--shadow-sm);
+      padding: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
     }
 
     .sidebar-card h3 {
-      margin: 0 0 10px;
+      margin: 0 0 14px;
       font-family: var(--font-serif);
-      font-size: 1rem;
+      font-size: 1.02rem;
     }
 
     .sidebar-list {
       display: grid;
-      gap: 8px;
+      gap: 12px;
     }
 
     .sidebar-link {
       display: block;
-      padding: 10px 12px;
+      padding: 12px 14px;
       border: 1px solid transparent;
       border-radius: 12px;
       color: var(--muted);
@@ -116,10 +186,10 @@
     }
 
     .sidebar-link.is-active {
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.72);
       border-color: rgba(184, 84, 47, 0.28);
       color: var(--ink);
-      box-shadow: 0 10px 28px rgba(35, 41, 33, 0.05);
+      box-shadow: var(--shadow-sm);
     }
 
     .sidebar-link strong {
@@ -146,11 +216,11 @@
     }
 
     .detail-card {
-      padding: 28px;
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      background: var(--card);
-      box-shadow: var(--shadow-md);
+      padding: clamp(28px, 5vw, 46px);
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
       margin-bottom: 26px;
     }
 
@@ -231,10 +301,21 @@
     @media (max-width: 960px) {
       .knowledge-layout {
         grid-template-columns: 1fr;
+        padding-top: 28px;
       }
 
       .knowledge-sidebar {
         position: static;
+      }
+
+      .knowledge-topline {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .top-links {
+        overflow-x: auto;
+        padding-bottom: 8px;
       }
     }
 
@@ -249,29 +330,16 @@
   <div class="bg-decor" aria-hidden="true"></div>
 
   <div class="shell">
-    <nav class="nav" aria-label="主导航">
-      <button class="nav-toggle" id="navToggle" aria-label="打开菜单" aria-expanded="false" aria-controls="navLinks">
-        <span></span><span></span><span></span>
-      </button>
-      <div class="nav-links" id="navLinks">
-        <a href="/">首页</a>
-        <a href="#selected">精选条目</a>
-        <a href="#topics">主题索引</a>
-      </div>
-    </nav>
-
-    <section class="section topic-strip" id="topics">
-      <div class="section-head">
-        <h2>主题索引</h2>
-        <p class="section-note">公开地图里的主题，用来快速定位内容方向。</p>
-      </div>
-      <div class="topic-grid" id="topicGrid">
-        <p class="topic-status">正在加载主题…</p>
-      </div>
-    </section>
-
     <section class="knowledge-layout">
       <aside class="knowledge-sidebar">
+        <a class="side-home" href="/">香瓜</a>
+        <nav class="side-links" aria-label="页面导航">
+          <a href="/">首页</a>
+          <a class="is-active" href="/knowledge/">知识地图</a>
+          <a href="/reading/">读书笔记</a>
+          <a href="/ideas/">个人 Idea</a>
+          <a href="/work/">工作成果</a>
+        </nav>
         <div class="sidebar-card">
           <h3>精选条目</h3>
           <div class="sidebar-list" id="sidebarList">
@@ -281,6 +349,23 @@
       </aside>
 
       <main class="knowledge-main">
+        <div class="knowledge-topline">
+          <section class="topic-strip" id="topics" aria-label="主题索引">
+            <div class="topic-head">
+              <h2>主题索引</h2>
+            </div>
+            <div class="topic-grid" id="topicGrid">
+              <p class="topic-status">正在加载主题…</p>
+            </div>
+          </section>
+          <nav class="top-links" aria-label="快速跳转">
+            <a href="/">首页</a>
+            <a href="/reading/">读书笔记</a>
+            <a href="/ideas/">个人 Idea</a>
+            <a href="/work/">工作成果</a>
+          </nav>
+        </div>
+
         <article class="detail-card" id="selected">
           <div class="detail-top">
             <span class="detail-badge" id="selectedCategory">精选条目</span>
@@ -293,13 +378,6 @@
       </main>
     </section>
 
-    <footer class="footer">
-      <div class="footer-links">
-        <a href="/">首页</a>
-        <a href="#selected">精选条目</a>
-        <a href="#topics">主题索引</a>
-      </div>
-    </footer>
   </div>
 
   <script>
@@ -424,6 +502,5 @@
 
     loadKnowledge();
   </script>
-  <script src="/js/home.js" defer></script>
 </body>
 </html>
