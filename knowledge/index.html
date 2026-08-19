@@ -105,25 +105,28 @@
       align-items: center;
       gap: 8px;
       padding: 8px 13px;
-      border: 1px solid rgba(35, 41, 33, 0.1);
+      border: 1px solid rgba(95, 125, 79, 0.22);
       border-radius: 999px;
-      background: rgba(35, 41, 33, 0.04);
+      background: rgba(95, 125, 79, 0.1);
       color: var(--muted);
       text-decoration: none;
       scroll-snap-align: start;
-      transition: background 180ms var(--ease-out-expo), border-color 180ms var(--ease-out-expo), color 180ms var(--ease-out-expo);
+      transition: transform 180ms var(--ease-out-expo), border-color 180ms var(--ease-out-expo), box-shadow 180ms var(--ease-out-expo);
     }
 
     .topic-chip:hover,
     .topic-chip:focus-visible,
     .topic-chip.is-active {
-      background: rgba(35, 41, 33, 0.08);
-      border-color: rgba(35, 41, 33, 0.16);
+      background: rgba(95, 125, 79, 0.1);
+      border-color: rgba(95, 125, 79, 0.36);
       color: var(--ink);
+      transform: scale(1.05);
+      box-shadow: 0 8px 18px rgba(95, 125, 79, 0.14);
     }
 
     .topic-chip:active {
-      background: rgba(35, 41, 33, 0.08);
+      background: rgba(95, 125, 79, 0.1);
+      transform: scale(1.03);
     }
 
     .topic-chip strong {
