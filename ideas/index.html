@@ -19,15 +19,16 @@
     <div class="layout">
       <aside class="side-nav">
         <a class="side-nav-logo" href="/">香瓜</a>
-        <a href="/#reading">首页 · 读书</a>
-        <a href="/#ideas">首页 · Idea</a>
-        <a href="/#work">首页 · 作品</a>
-        <a href="/#knowledge">首页 · 知识库</a>
-        <div class="side-nav-divider"></div>
         <a href="/reading/">读书笔记</a>
         <a class="is-active" href="/ideas/">个人 Idea</a>
         <a href="/work/">工作成果</a>
         <a href="/knowledge/">知识地图 ↗</a>
+        <div class="side-nav-divider"></div>
+        <div class="side-nav-entries" id="sideNavEntries">
+          <a href="#idea-1">占位 Idea 一</a>
+          <a href="#idea-2">占位 Idea 二</a>
+          <a href="#idea-3">占位 Idea 三</a>
+        </div>
       </aside>
 
       <main>
@@ -38,7 +39,7 @@
         </div>
 
         <div class="note-list">
-          <article class="note">
+          <article class="note" id="idea-1">
             <div class="note-head">
               <h2>占位 Idea 一</h2>
               <p class="note-meta">待替换</p>
@@ -47,7 +48,7 @@
               <p>写一条最近在想的、还没验证的产品或内容 idea，说清楚问题、假设和为什么值得一试。</p>
             </div>
           </article>
-          <article class="note">
+          <article class="note" id="idea-2">
             <div class="note-head">
               <h2>占位 Idea 二</h2>
               <p class="note-meta">待替换</p>
@@ -56,7 +57,7 @@
               <p>写一条最近在想的、还没验证的产品或内容 idea，说清楚问题、假设和为什么值得一试。</p>
             </div>
           </article>
-          <article class="note">
+          <article class="note" id="idea-3">
             <div class="note-head">
               <h2>占位 Idea 三</h2>
               <p class="note-meta">待替换</p>
@@ -69,5 +70,7 @@
       </main>
     </div>
   </div>
+
+  <script src="/js/subpage.js" defer></script>
 </body>
 </html>

@@ -60,6 +60,17 @@
   background: var(--line-soft);
 }
 
+.side-nav-entries a {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.side-nav-entries a.is-active {
+  color: var(--cinnabar);
+  font-weight: 600;
+  background: var(--card);
+}
+
 /* -------------------------------------------------------------------------
    中间内容区
    ------------------------------------------------------------------------- */

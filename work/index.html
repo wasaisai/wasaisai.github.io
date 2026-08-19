@@ -19,15 +19,16 @@
     <div class="layout">
       <aside class="side-nav">
         <a class="side-nav-logo" href="/">香瓜</a>
-        <a href="/#reading">首页 · 读书</a>
-        <a href="/#ideas">首页 · Idea</a>
-        <a href="/#work">首页 · 作品</a>
-        <a href="/#knowledge">首页 · 知识库</a>
-        <div class="side-nav-divider"></div>
         <a href="/reading/">读书笔记</a>
         <a href="/ideas/">个人 Idea</a>
         <a class="is-active" href="/work/">工作成果</a>
         <a href="/knowledge/">知识地图 ↗</a>
+        <div class="side-nav-divider"></div>
+        <div class="side-nav-entries" id="sideNavEntries">
+          <a href="#project-1">项目名称一</a>
+          <a href="#project-2">项目名称二</a>
+          <a href="#project-3">项目名称三</a>
+        </div>
       </aside>
 
       <main>
@@ -38,7 +39,7 @@
         </div>
 
         <div class="note-list">
-          <article class="note">
+          <article class="note" id="project-1">
             <div class="note-head">
               <h2>项目名称一</h2>
               <p class="note-meta">角色 · 时间 · 待替换</p>
@@ -47,7 +48,7 @@
               <p>一句话说明这个项目解决了什么问题、结果如何，可以补充技术栈和链接。</p>
             </div>
           </article>
-          <article class="note">
+          <article class="note" id="project-2">
             <div class="note-head">
               <h2>项目名称二</h2>
               <p class="note-meta">角色 · 时间 · 待替换</p>
@@ -56,7 +57,7 @@
               <p>一句话说明这个项目解决了什么问题、结果如何，可以补充技术栈和链接。</p>
             </div>
           </article>
-          <article class="note">
+          <article class="note" id="project-3">
             <div class="note-head">
               <h2>项目名称三</h2>
               <p class="note-meta">角色 · 时间 · 待替换</p>
@@ -69,5 +70,7 @@
       </main>
     </div>
   </div>
+
+  <script src="/js/subpage.js" defer></script>
 </body>
 </html>
