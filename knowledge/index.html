@@ -17,8 +17,58 @@
       grid-template-columns: 280px minmax(0, 1fr);
       gap: 24px;
       align-items: start;
-      padding-top: 2.25rem;
+      padding-top: 1rem;
       padding-bottom: 2rem;
+    }
+
+    .topic-strip {
+      padding: 18px 0 8px;
+    }
+
+    .topic-strip .section-head {
+      margin-bottom: 10px;
+    }
+
+    .topic-strip .section-head h2 {
+      font-size: 1rem;
+    }
+
+    .topic-strip .section-note {
+      display: none;
+    }
+
+    .topic-strip .topic-grid {
+      display: flex;
+      gap: 10px;
+      margin: 0;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      padding: 0 0 10px;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .topic-strip .topic-grid::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .topic-strip .topic-grid::-webkit-scrollbar-thumb {
+      border-radius: 999px;
+      background: rgba(73, 81, 73, 0.18);
+    }
+
+    .topic-strip .topic-card {
+      flex: 0 0 210px;
+      padding: 12px 14px;
+      scroll-snap-align: start;
+    }
+
+    .topic-strip .topic-note {
+      display: none;
+    }
+
+    .topic-strip .topic-card-head {
+      margin-bottom: 8px;
     }
 
     .knowledge-sidebar {
@@ -200,7 +250,6 @@
 
   <div class="shell">
     <nav class="nav" aria-label="主导航">
-      <a class="nav-logo" href="/">香瓜</a>
       <button class="nav-toggle" id="navToggle" aria-label="打开菜单" aria-expanded="false" aria-controls="navLinks">
         <span></span><span></span><span></span>
       </button>
@@ -210,6 +259,16 @@
         <a href="#topics">主题索引</a>
       </div>
     </nav>
+
+    <section class="section topic-strip" id="topics">
+      <div class="section-head">
+        <h2>主题索引</h2>
+        <p class="section-note">公开地图里的主题，用来快速定位内容方向。</p>
+      </div>
+      <div class="topic-grid" id="topicGrid">
+        <p class="topic-status">正在加载主题…</p>
+      </div>
+    </section>
 
     <section class="knowledge-layout">
       <aside class="knowledge-sidebar">
@@ -231,16 +290,6 @@
           <p class="detail-summary" id="selectedSummary"></p>
           <div class="article-body" id="selectedArticle"></div>
         </article>
-
-        <section class="section knowledge-section" id="topics">
-          <div class="section-head">
-            <h2>主题索引</h2>
-            <p class="section-note">公开地图里的主题，用来快速定位内容方向。</p>
-          </div>
-          <div class="topic-grid" id="topicGrid">
-            <p class="topic-status">正在加载主题…</p>
-          </div>
-        </section>
       </main>
     </section>
 
