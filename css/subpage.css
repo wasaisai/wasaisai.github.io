@@ -1,0 +1,180 @@
+/* ==========================================================================
+   二级页面通用布局：左侧导航 + 中间内容
+   复用 home.css 里的设计 token（配色 / 字体 / 渐变氛围），只加布局与文章排版。
+   ========================================================================== */
+
+.layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+  padding: clamp(2.5rem, 6vw, 4rem) 0 5rem;
+}
+
+/* -------------------------------------------------------------------------
+   左侧导航
+   ------------------------------------------------------------------------- */
+
+.side-nav {
+  position: sticky;
+  top: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.side-nav-logo {
+  margin-bottom: 22px;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.side-nav a {
+  padding: 9px 12px;
+  margin-left: -12px;
+  border-radius: 10px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background 200ms var(--ease-out-expo), color 200ms var(--ease-out-expo);
+}
+
+.side-nav a:hover,
+.side-nav a:focus-visible {
+  color: var(--ink);
+  background: var(--card);
+}
+
+.side-nav a.is-active {
+  color: var(--cinnabar);
+  font-weight: 600;
+  background: var(--card);
+}
+
+.side-nav-divider {
+  height: 1px;
+  margin: 14px 0;
+  background: var(--line-soft);
+}
+
+/* -------------------------------------------------------------------------
+   中间内容区
+   ------------------------------------------------------------------------- */
+
+.content-head {
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.content-head .eyebrow {
+  margin-bottom: 10px;
+}
+
+.content-head h1 {
+  margin: 0 0 14px;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(2.1rem, 4vw, 3rem);
+  line-height: 1.1;
+}
+
+.content-head p {
+  margin: 0;
+  max-width: 40rem;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.note-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.note {
+  padding: clamp(1.8rem, 3vw, 2.6rem) 0;
+  border-top: 1px solid var(--line-soft);
+  scroll-margin-top: 96px;
+}
+
+.note:first-child {
+  border-top: none;
+}
+
+.note-head {
+  margin-bottom: 18px;
+}
+
+.note-head h2 {
+  margin: 0 0 8px;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(1.35rem, 2.6vw, 1.7rem);
+}
+
+.note-meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+}
+
+.note-meta a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-decoration-color: rgba(49, 95, 114, 0.35);
+  text-underline-offset: 3px;
+}
+
+/* 文章正文排版 */
+.prose {
+  max-width: 42rem;
+  color: var(--ink);
+  font-size: 0.98rem;
+  line-height: 1.85;
+}
+
+.prose h3 {
+  margin: 1.6em 0 0.6em;
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.prose p {
+  margin: 0 0 1em;
+}
+
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 860px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .side-nav {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .side-nav-logo {
+    width: 100%;
+    margin-bottom: 4px;
+  }
+
+  .side-nav-divider {
+    display: none;
+  }
+
+  .side-nav a {
+    margin-left: 0;
+  }
+}

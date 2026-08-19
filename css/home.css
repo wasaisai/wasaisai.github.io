@@ -238,11 +238,14 @@ a {
 
 .card {
   position: relative;
+  display: flex;
+  flex-direction: column;
   padding: 26px 24px;
   border: 1px solid var(--line);
   border-radius: 16px;
   background: var(--card);
   box-shadow: var(--shadow-sm);
+  text-decoration: none;
   transition: transform 260ms var(--ease-out-expo), box-shadow 260ms var(--ease-out-expo), border-color 260ms var(--ease-out-expo);
 }
 
