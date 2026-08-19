@@ -155,6 +155,18 @@ a {
   color: var(--cinnabar);
 }
 
+.nav-github {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-github svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: currentColor;
+}
+
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -408,21 +420,6 @@ a {
   border-top: 1px solid var(--line-soft);
   color: var(--muted);
   font-size: 0.82rem;
-}
-
-.footer-links {
-  display: flex;
-  gap: 18px;
-}
-
-.footer-links a {
-  color: var(--muted);
-  text-decoration: none;
-}
-
-.footer-links a:hover,
-.footer-links a:focus-visible {
-  color: var(--cinnabar);
 }
 
 /* -------------------------------------------------------------------------
