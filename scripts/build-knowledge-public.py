@@ -14,7 +14,7 @@ PRIVATE_ROOT = Path.home() / "ip-kb"
 SOURCE = PRIVATE_ROOT / "20-公开发布" / "knowledge-public.json"
 TARGET = REPO_ROOT / "data" / "knowledge-public.json"
 
-REQUIRED_KEYS = {"profile", "topics", "links", "timeline", "rules"}
+REQUIRED_KEYS = {"profile", "featured", "topics", "links", "timeline", "rules"}
 
 
 def main() -> None:

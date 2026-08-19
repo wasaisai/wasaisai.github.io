@@ -2,102 +2,159 @@
   "profile": {
     "name": "香瓜",
     "title": "个人知识库公开地图",
-    "description": "这里展示的是从私人知识库中筛选后的公开内容：主题、问题、项目和文章之间的关系。完整聊天记录和个人原始资料不公开。",
+    "description": "这里展示的是从 44 条 ChatGPT 可见线程快照中筛选出的公开主题地图。完整聊天记录和个人原始资料不公开。",
     "updatedAt": "2026-08-19"
   },
+  "featured": [
+    {
+      "id": "workflow",
+      "title": "AI 工具如何变成真实工作流",
+      "category": "技术",
+      "summary": "我关心的不是问答本身，而是怎么把 AI 放进长期使用的工作台。",
+      "topic": "ai"
+    },
+    {
+      "id": "troubleshoot",
+      "title": "配置与排障为什么占了我很多时间",
+      "category": "技术",
+      "summary": "连通、路径、插件、环境和依赖问题，都是我日常工作方式的一部分。",
+      "topic": "code"
+    },
+    {
+      "id": "body-state",
+      "title": "身体状态如何影响我的工作和情绪",
+      "category": "健康",
+      "summary": "睡眠、运动、身体不适和情绪波动，常常需要一起看。",
+      "topic": "health"
+    },
+    {
+      "id": "mood",
+      "title": "情绪烦躁、孤立感和消费后的情绪从哪里来",
+      "category": "心理",
+      "summary": "我更想记录情绪怎么出现，而不是急着给它下一个漂亮结论。",
+      "topic": "questions"
+    },
+    {
+      "id": "relationship",
+      "title": "两性关系和亲密关系如何进入观察系统",
+      "category": "关系",
+      "summary": "关系里的变化、失落和适应，适合长期观察而不是一次性定论。",
+      "topic": "self"
+    },
+    {
+      "id": "order",
+      "title": "我如何在不稳定阶段维持秩序感",
+      "category": "心理",
+      "summary": "失业、求职和生活起伏都需要结构，而不是情绪口号。",
+      "topic": "questions"
+    }
+  ],
   "topics": [
     {
-      "id": "ai",
-      "name": "AI",
-      "weight": 96,
-      "type": "method",
-      "note": "把 AI 当成外脑、协作者和工作流基础设施。"
-    },
-    {
-      "id": "content",
-      "name": "自媒体",
-      "weight": 88,
-      "type": "practice",
-      "note": "把观点、经验和问题转化成可传播的内容。"
-    },
-    {
-      "id": "ip",
-      "name": "个人 IP",
-      "weight": 82,
-      "type": "strategy",
-      "note": "用清晰定位连接能力、作品和受众。"
+      "id": "questions",
+      "name": "长期问题",
+      "weight": 100,
+      "type": "inquiry",
+      "note": "把反复出现的问题变成可继续研究的线索。 本轮私有索引中有 26 条相关对话。"
     },
     {
       "id": "code",
       "name": "编程",
-      "weight": 76,
+      "weight": 36,
       "type": "craft",
-      "note": "用软件化方式沉淀工具和自动化流程。"
+      "note": "从工程、自动化、网站和工具讨论中沉淀出的编程主题。 本轮私有索引中有 6 条相关对话。"
     },
     {
-      "id": "business",
-      "name": "商业",
-      "weight": 72,
-      "type": "lens",
-      "note": "关注需求、交易、分发和长期资产。"
+      "id": "ai",
+      "name": "AI",
+      "weight": 36,
+      "type": "method",
+      "note": "从对话中沉淀出的 AI 使用、工具化和协作主题。 本轮私有索引中有 6 条相关对话。"
+    },
+    {
+      "id": "health",
+      "name": "生活与健康",
+      "weight": 36,
+      "type": "life",
+      "note": "生活、健康和日常问题只保留主题入口，不公开敏感细节。 本轮私有索引中有 6 条相关对话。"
     },
     {
       "id": "self",
       "name": "个人事实",
-      "weight": 64,
+      "weight": 36,
       "type": "identity",
-      "note": "只记录可验证事实、原话和反复出现的模式。"
+      "note": "只记录可验证事实、原话和反复出现的模式，不公开原始私人分析。 本轮私有索引中有 5 条相关对话。"
     },
     {
-      "id": "questions",
-      "name": "长期问题",
-      "weight": 58,
-      "type": "inquiry",
-      "note": "把反复追问的问题变成可持续研究线索。"
+      "id": "ip",
+      "name": "个人 IP",
+      "weight": 36,
+      "type": "strategy",
+      "note": "从定位、人设、受众、知识库和获客讨论中沉淀出的个人 IP 主题。 本轮私有索引中有 4 条相关对话。"
+    },
+    {
+      "id": "business",
+      "name": "商业",
+      "weight": 36,
+      "type": "lens",
+      "note": "从产品、需求、交易和长期资产讨论中沉淀出的商业主题。 本轮私有索引中有 3 条相关对话。"
+    },
+    {
+      "id": "content",
+      "name": "自媒体",
+      "weight": 36,
+      "type": "practice",
+      "note": "从选题、表达、脚本和发布讨论中沉淀出的内容主题。 本轮私有索引中有 1 条相关对话。"
     }
   ],
   "links": [
     {
       "source": "ai",
       "target": "content",
-      "strength": 0.92,
+      "strength": 0.3,
       "label": "辅助选题与表达"
     },
     {
       "source": "content",
       "target": "ip",
-      "strength": 0.88,
+      "strength": 0.3,
       "label": "形成外部识别"
     },
     {
       "source": "ai",
       "target": "code",
-      "strength": 0.84,
+      "strength": 0.3,
       "label": "工具化与自动化"
     },
     {
       "source": "business",
       "target": "ip",
-      "strength": 0.78,
+      "strength": 0.3,
       "label": "定位与获客"
     },
     {
       "source": "self",
       "target": "ip",
-      "strength": 0.7,
+      "strength": 0.3,
       "label": "事实基准约束人设"
     },
     {
       "source": "questions",
       "target": "content",
-      "strength": 0.74,
+      "strength": 0.3,
       "label": "问题驱动内容"
     },
     {
       "source": "business",
       "target": "questions",
-      "strength": 0.6,
+      "strength": 0.3,
       "label": "检验真实需求"
+    },
+    {
+      "source": "health",
+      "target": "self",
+      "strength": 0.3,
+      "label": "日常状态观察"
     }
   ],
   "timeline": [
@@ -107,18 +164,19 @@
       "text": "原网站已有 2022 年文章沉淀，适合作为公开表达的起点。"
     },
     {
-      "date": "2026",
-      "title": "ChatGPT 对话沉淀",
-      "text": "大量对话可以转成私有知识库，但公开站点只展示筛选后的主题地图。"
+      "date": "2026-08-19",
+      "title": "ChatGPT 对话索引",
+      "text": "已从可见线程快照中生成 44 条对话索引，公开站点只展示主题统计和脱敏后的关系。"
     },
     {
       "date": "下一步",
       "title": "知识库可视化",
-      "text": "把私人资料整理成公开节点、关系、文章入口和长期问题列表。"
+      "text": "继续把私人资料整理成公开节点、关系、文章入口和长期问题列表。"
     }
   ],
   "rules": [
     "不公开原始 ChatGPT 聊天记录。",
+    "不公开具体聊天标题，公开站点只展示主题统计。",
     "不把隐私事实、凭据、未确认判断发布到 GitHub Pages。",
     "公开页面只使用筛选、脱敏、可复查的内容。",
     "涉及个人分析时优先读取事实基准，不从经历倒推动机。"
