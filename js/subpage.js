@@ -1,45 +1,49 @@
 (function () {
   "use strict";
 
-  function initEntryScrollSpy() {
+  function initEntrySwitcher() {
     var entryLinks = document.querySelectorAll(".side-nav-entries a");
-    if (!entryLinks.length) return;
+    var notes = document.querySelectorAll("article.note[id]");
+    if (!entryLinks.length || !notes.length) return;
 
-    var linkById = {};
-    entryLinks.forEach(function (link) {
-      var id = link.getAttribute("href").replace("#", "");
-      linkById[id] = link;
+    var noteById = {};
+    notes.forEach(function (note) {
+      noteById[note.id] = note;
     });
 
-    var notes = document.querySelectorAll("article.note[id]");
-    if (!notes.length) return;
-
-    function setActive(id) {
+    function showNote(id) {
       entryLinks.forEach(function (link) {
         link.classList.remove("is-active");
       });
-      if (linkById[id]) {
-        linkById[id].classList.add("is-active");
+
+      notes.forEach(function (note) {
+        note.classList.remove("is-visible");
+      });
+
+      var targetLink = Array.from(entryLinks).find(function (link) {
+        return link.getAttribute("href") === "#" + id;
+      });
+      if (targetLink) {
+        targetLink.classList.add("is-active");
+      }
+
+      if (noteById[id]) {
+        noteById[id].classList.add("is-visible");
       }
     }
 
-    var observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            setActive(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: "-20% 0px -70% 0px" }
-    );
-
-    notes.forEach(function (note) {
-      observer.observe(note);
+    entryLinks.forEach(function (link) {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        var id = link.getAttribute("href").replace("#", "");
+        showNote(id);
+        history.replaceState(null, "", "#" + id);
+      });
     });
 
-    setActive(notes[0].id);
+    var initialId = location.hash.replace("#", "") || notes[0].id;
+    showNote(initialId);
   }
 
-  document.addEventListener("DOMContentLoaded", initEntryScrollSpy);
+  document.addEventListener("DOMContentLoaded", initEntrySwitcher);
 })();

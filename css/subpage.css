@@ -60,6 +60,12 @@
   background: var(--line-soft);
 }
 
+.side-nav-entries {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .side-nav-entries a {
   font-size: 0.85rem;
   color: var(--muted);
@@ -105,13 +111,12 @@
 }
 
 .note {
+  display: none;
   padding: clamp(1.8rem, 3vw, 2.6rem) 0;
-  border-top: 1px solid var(--line-soft);
-  scroll-margin-top: 96px;
 }
 
-.note:first-child {
-  border-top: none;
+.note.is-visible {
+  display: block;
 }
 
 .note-head {
