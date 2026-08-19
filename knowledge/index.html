@@ -71,12 +71,20 @@
     }
 
     .topic-strip {
+      position: sticky;
+      top: 20px;
+      z-index: 10;
       display: flex;
       flex-direction: column;
       gap: 10px;
       margin-bottom: 1.4rem;
       padding-bottom: 1rem;
       border-bottom: 1px solid var(--line-soft);
+      transition: transform 220ms var(--ease-out-expo);
+    }
+
+    .topic-strip.is-scroll-down {
+      transform: translateY(calc(-100% - 24px));
     }
 
     .topic-strip .topic-grid {
@@ -127,6 +135,10 @@
     .topic-chip:active {
       background: rgba(95, 125, 79, 0.1);
       transform: scale(1.03);
+    }
+
+    .knowledge-main .note-list {
+      min-height: 110vh;
     }
 
     .topic-chip strong {
@@ -267,7 +279,35 @@
       var params = new URLSearchParams();
       if (topicId) params.set('topic', topicId);
       if (itemId) params.set('item', itemId);
-      return '?' + params.toString() + '#selected';
+      return '?' + params.toString();
+    }
+
+    function initTopicScrollBehavior() {
+      var strip = document.getElementById('topics');
+      if (!strip) return;
+      var lastY = window.scrollY;
+      var ticking = false;
+
+      function updateScrollState() {
+        var currentY = window.scrollY;
+        var movingDown = currentY > lastY + 4;
+        var movingUp = currentY < lastY - 4;
+        var reachedTop = strip.getBoundingClientRect().top <= 20;
+        if (reachedTop && movingDown) {
+          strip.classList.add('is-scroll-down');
+        } else if (movingUp || currentY <= strip.offsetTop) {
+          strip.classList.remove('is-scroll-down');
+        }
+        lastY = currentY;
+        ticking = false;
+      }
+
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          window.requestAnimationFrame(updateScrollState);
+          ticking = true;
+        }
+      }, { passive: true });
     }
 
     function renderSidebar(items, selectedId, selectedTopic) {
@@ -404,6 +444,16 @@
         });
     }
 
+    document.addEventListener('click', function (event) {
+      var chip = event.target.closest('.topic-chip');
+      if (!chip) return;
+      event.preventDefault();
+      var url = new URL(chip.href, window.location.href);
+      window.history.replaceState(null, '', url.pathname + url.search);
+      loadKnowledge();
+    });
+
+    initTopicScrollBehavior();
     loadKnowledge();
   </script>
 </body>
