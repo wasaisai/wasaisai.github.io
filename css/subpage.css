@@ -45,13 +45,13 @@
 .side-nav a:hover,
 .side-nav a:focus-visible {
   color: var(--ink);
-  background: rgba(35, 41, 33, 0.12);
+  background: rgba(35, 41, 33, 0.07);
 }
 
 .side-nav a.is-active {
   color: var(--cinnabar);
   font-weight: 600;
-  background: rgba(35, 41, 33, 0.12);
+  background: rgba(35, 41, 33, 0.07);
 }
 
 .side-nav-divider {
@@ -74,7 +74,7 @@
 .side-nav-entries a.is-active {
   color: var(--cinnabar);
   font-weight: 600;
-  background: rgba(35, 41, 33, 0.12);
+  background: rgba(35, 41, 33, 0.07);
 }
 
 /* -------------------------------------------------------------------------
