@@ -82,10 +82,11 @@
     .topic-strip .topic-grid {
       display: flex;
       gap: 10px;
-      margin: 0;
+      margin: -10px -14px -8px;
       overflow-x: auto;
       overscroll-behavior-x: contain;
-      padding: 0 0 8px;
+      padding: 10px 14px 16px;
+      scroll-padding-inline: 14px;
       scroll-snap-type: x proximity;
       -webkit-overflow-scrolling: touch;
     }
@@ -111,6 +112,7 @@
       color: var(--muted);
       text-decoration: none;
       scroll-snap-align: start;
+      transform-origin: center;
       transition: transform 180ms var(--ease-out-expo), border-color 180ms var(--ease-out-expo), box-shadow 180ms var(--ease-out-expo);
     }
 
