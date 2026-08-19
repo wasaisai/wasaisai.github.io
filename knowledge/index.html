@@ -8,8 +8,8 @@
   <link rel="apple-touch-icon" href="/icons-192.png" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="shortcut icon" href="/favicon.ico" />
-  <title>知识地图 · 香瓜</title>
-  <meta name="description" content="香瓜的公开知识库：左侧导航、文章式条目和主题索引。" />
+  <title>知识库 · 香瓜</title>
+  <meta name="description" content="香瓜的公开知识库：左侧导航、文章式条目和分类筛选。" />
   <link rel="stylesheet" href="/css/home.css" />
   <link rel="stylesheet" href="/css/subpage.css" />
   <style>
@@ -70,26 +70,6 @@
       margin-bottom: 0;
     }
 
-    .knowledge-links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 10px 16px;
-      padding-top: 18px;
-      font-size: 0.85rem;
-      white-space: nowrap;
-    }
-
-    .knowledge-links a {
-      color: var(--muted);
-      text-decoration: none;
-    }
-
-    .knowledge-links a:hover,
-    .knowledge-links a:focus-visible {
-      color: var(--cinnabar);
-    }
-
     .topic-strip {
       display: flex;
       flex-direction: column;
@@ -97,20 +77,6 @@
       margin-bottom: 1.4rem;
       padding-bottom: 1rem;
       border-bottom: 1px solid var(--line-soft);
-    }
-
-    .topic-strip .section-head {
-      margin-bottom: 0;
-      align-items: center;
-    }
-
-    .topic-strip .section-head h2 {
-      margin: 0;
-      font-size: 1rem;
-    }
-
-    .topic-strip .section-note {
-      display: none;
     }
 
     .topic-strip .topic-grid {
@@ -139,9 +105,9 @@
       align-items: center;
       gap: 8px;
       padding: 8px 13px;
-      border: 1px solid rgba(73, 81, 73, 0.12);
+      border: 1px solid rgba(95, 125, 79, 0.2);
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.42);
+      background: rgba(95, 125, 79, 0.1);
       color: var(--muted);
       text-decoration: none;
       scroll-snap-align: start;
@@ -151,8 +117,8 @@
     .topic-chip:hover,
     .topic-chip:focus-visible,
     .topic-chip.is-active {
-      background: rgba(255, 255, 255, 0.58);
-      border-color: rgba(184, 84, 47, 0.28);
+      background: rgba(184, 84, 47, 0.12);
+      border-color: rgba(184, 84, 47, 0.3);
       color: var(--ink);
     }
 
@@ -210,11 +176,6 @@
         grid-template-columns: 1fr;
       }
 
-      .knowledge-links {
-        justify-content: flex-start;
-        padding-top: 0;
-      }
-
       .knowledge-sidebar {
         position: static;
       }
@@ -249,22 +210,12 @@
         <div class="knowledge-head">
           <div class="content-head">
             <p class="eyebrow">Knowledge index</p>
-            <h1>知识地图</h1>
-            <p>把公开精选条目、主题索引和入口都收在这里，方便快速浏览、索引和跳转。</p>
+            <h1>知识库</h1>
+            <p>把公开精选条目和分类入口都收在这里，方便快速浏览、索引和跳转。</p>
           </div>
-          <nav class="knowledge-links" aria-label="快速跳转">
-            <a href="/">首页</a>
-            <a href="/reading/">读书笔记</a>
-            <a href="/ideas/">个人 Idea</a>
-            <a href="/work/">工作成果</a>
-          </nav>
         </div>
 
-        <section class="topic-strip" id="topics" aria-label="主题索引">
-          <div class="section-head">
-            <h2>主题索引</h2>
-            <p class="section-note">公开地图里的主题，用来快速定位内容方向。</p>
-          </div>
+        <section class="topic-strip" id="topics" aria-label="主题筛选">
           <div class="topic-grid" id="topicGrid">
             <p class="topic-status">正在加载主题…</p>
           </div>
