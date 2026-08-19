@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-PRIVATE_ROOT = Path.home() / "Documents" / "我的IP知识库"
+PRIVATE_ROOT = Path.home() / "ip-kb"
 SOURCE = PRIVATE_ROOT / "20-公开发布" / "knowledge-public.json"
 TARGET = REPO_ROOT / "data" / "knowledge-public.json"
 
