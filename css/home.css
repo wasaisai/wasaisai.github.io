@@ -123,9 +123,7 @@ a {
   align-items: center;
   justify-content: flex-end;
   padding: 22px 0;
-  background: linear-gradient(to bottom, rgba(250, 246, 236, 0.92), rgba(250, 246, 236, 0.78));
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: transparent;
 }
 
 .nav-logo {
@@ -138,6 +136,7 @@ a {
 
 .nav-links {
   display: flex;
+  margin-left: auto;
   align-items: center;
   gap: 1.6rem;
   font-size: 0.82rem;
@@ -440,6 +439,7 @@ a {
     top: calc(100% + 1px);
     left: 0;
     right: 0;
+    margin-left: 0;
     flex-direction: column;
     align-items: flex-start;
     gap: 0;
