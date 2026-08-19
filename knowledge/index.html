@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>香瓜｜个人知识库地图</title>
+  <meta name="description" content="香瓜的公开版个人知识库可视化：主题地图、关系网络、时间线和发布规则。" />
+  <style>
+    :root {
+      --paper: #f2eadc;
+      --ink: #1f261f;
+      --muted: #687064;
+      --moss: #5f7d4f;
+      --cinnabar: #b84a2f;
+      --blue: #315f72;
+      --line: rgba(31, 38, 31, 0.18);
+      --card: rgba(255, 250, 240, 0.74);
+      --shadow: 0 28px 80px rgba(31, 38, 31, 0.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(184, 74, 47, 0.18), transparent 26rem),
+        radial-gradient(circle at 88% 14%, rgba(49, 95, 114, 0.2), transparent 22rem),
+        linear-gradient(135deg, #f7f0df 0%, var(--paper) 48%, #e7dcc7 100%);
+      font-family: "Iowan Old Style", "Songti SC", "Noto Serif CJK SC", Georgia, serif;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.24;
+      background-image:
+        linear-gradient(rgba(31, 38, 31, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31, 38, 31, 0.05) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(to bottom, #000, transparent 76%);
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 0 18px;
+      font-family: "Avenir Next", "PingFang SC", sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(360px, 1.08fr);
+      gap: 42px;
+      align-items: center;
+      padding: 48px 0 70px;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--cinnabar);
+      font-family: "Avenir Next", "PingFang SC", sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 720px;
+      font-size: clamp(48px, 9vw, 112px);
+      line-height: 0.92;
+      letter-spacing: -0.08em;
+      font-weight: 900;
+    }
+
+    .hero-copy {
+      margin: 28px 0 0;
+      max-width: 620px;
+      color: var(--muted);
+      font-size: clamp(17px, 2vw, 22px);
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+      font-family: "Avenir Next", "PingFang SC", sans-serif;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      padding: 12px 18px;
+      background: var(--ink);
+      color: #fff9ec;
+      text-decoration: none;
+      box-shadow: 0 12px 30px rgba(31, 38, 31, 0.18);
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--ink);
+      box-shadow: none;
+    }
+
+    .map-card {
+      position: relative;
+      min-height: 560px;
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(16px);
+    }
+
+    .map-card::before {
+      content: "";
+      position: absolute;
+      inset: 20px;
+      border: 1px dashed rgba(31, 38, 31, 0.18);
+      border-radius: 26px;
+    }
+
+    svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .node {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      width: var(--size);
+      height: var(--size);
+      left: var(--x);
+      top: var(--y);
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px solid rgba(31, 38, 31, 0.28);
+      background: radial-gradient(circle at 36% 28%, #fffdf4, var(--color));
+      box-shadow: 0 18px 42px rgba(31, 38, 31, 0.14);
+      font-family: "Avenir Next", "PingFang SC", sans-serif;
+      font-weight: 800;
+      text-align: center;
+      cursor: default;
+      animation: breathe 5.8s ease-in-out infinite;
+      animation-delay: var(--delay);
+    }
+
+    .node span {
+      width: min-content;
+      min-width: 4em;
+      font-size: clamp(12px, 1.8vw, 16px);
+      line-height: 1.15;
+    }
+
+    .node:hover { transform: translate(-50%, -50%) scale(1.06); }
+
+    .section {
+      padding: 44px 0;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 54px);
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    .section-title p {
+      margin: 0;
+      max-width: 520px;
+      color: var(--muted);
+      font-family: "Avenir Next", "PingFang SC", sans-serif;
+      line-height: 1.7;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card, .timeline-item, .rule {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255, 250, 240, 0.62);
+      padding: 22px;
+    }
+
+    .card strong {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 22px;
+      letter-spacing: -0.03em;
+    }
+
+    .card p, .timeline-item p, .rule {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .timeline-item time {
+      display: inline-flex;
+      margin-bottom: 18px;
+      color: var(--cinnabar);
+      font-family: "Avenir Next", "PingFang SC", sans-serif;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .timeline-item h3 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .rules {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      font-family: "Avenir Next", "PingFang SC", sans-serif;
+    }
+
+    .footer {
+      padding: 56px 0 44px;
+      color: var(--muted);
+      font-family: "Avenir Next", "PingFang SC", sans-serif;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    @keyframes breathe {
+      0%, 100% { filter: saturate(0.92); }
+      50% { filter: saturate(1.12); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .node { animation: none; }
+    }
+
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; padding-top: 30px; }
+      .map-card { min-height: 430px; }
+      .cards, .timeline, .rules { grid-template-columns: 1fr; }
+      .section-title { display: block; }
+      .section-title p { margin-top: 14px; }
+      .nav { align-items: flex-start; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <nav class="nav" aria-label="主导航">
+      <a href="/">香瓜</a>
+      <div class="nav-links">
+        <a href="#topics">主题</a>
+        <a href="#timeline">时间线</a>
+        <a href="#rules">公开规则</a>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Public knowledge map / not the private archive</p>
+        <h1>把聊天记录炼成一张能继续生长的地图。</h1>
+        <p class="hero-copy" id="intro">这是公开版个人知识库入口：展示可发布的主题、问题和关系。完整 ChatGPT 对话、私人事实和未确认分析，留在本地知识库里。</p>
+        <div class="hero-actions">
+          <a class="button" href="#topics">看主题地图</a>
+          <a class="button secondary" href="/">回到博客首页</a>
+        </div>
+      </div>
+
+      <div class="map-card" aria-label="知识库主题关系图">
+        <svg viewBox="0 0 640 560" role="img" aria-label="AI、自媒体、个人 IP、编程、商业、个人事实和长期问题之间的关系">
+          <line x1="318" y1="188" x2="444" y2="258" stroke="rgba(31,38,31,.28)" stroke-width="2" />
+          <line x1="444" y1="258" x2="390" y2="390" stroke="rgba(31,38,31,.28)" stroke-width="2" />
+          <line x1="318" y1="188" x2="194" y2="270" stroke="rgba(31,38,31,.28)" stroke-width="2" />
+          <line x1="230" y1="410" x2="390" y2="390" stroke="rgba(31,38,31,.22)" stroke-width="2" />
+          <line x1="160" y1="150" x2="390" y2="390" stroke="rgba(31,38,31,.18)" stroke-width="2" />
+          <line x1="116" y1="356" x2="444" y2="258" stroke="rgba(31,38,31,.18)" stroke-width="2" />
+          <line x1="230" y1="410" x2="116" y2="356" stroke="rgba(31,38,31,.18)" stroke-width="2" />
+        </svg>
+        <div class="node" style="--x:50%;--y:34%;--size:132px;--color:#d8e3bd;--delay:0s"><span>AI</span></div>
+        <div class="node" style="--x:70%;--y:46%;--size:118px;--color:#efc3a5;--delay:.4s"><span>自媒体</span></div>
+        <div class="node" style="--x:61%;--y:70%;--size:106px;--color:#d7c2a1;--delay:.8s"><span>个人 IP</span></div>
+        <div class="node" style="--x:30%;--y:48%;--size:104px;--color:#b8d3d7;--delay:1.1s"><span>编程</span></div>
+        <div class="node" style="--x:36%;--y:73%;--size:96px;--color:#cddab6;--delay:1.5s"><span>商业</span></div>
+        <div class="node" style="--x:25%;--y:27%;--size:90px;--color:#ead6bf;--delay:1.9s"><span>个人事实</span></div>
+        <div class="node" style="--x:18%;--y:64%;--size:86px;--color:#e4c4b8;--delay:2.3s"><span>长期问题</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="topics">
+      <div class="section-title">
+        <h2>主题不是分类，是入口。</h2>
+        <p>公开站点只需要保留能帮助别人理解你的入口；原始资料、聊天细节和未完成判断不必暴露。</p>
+      </div>
+      <div class="cards" id="topicCards"></div>
+    </section>
+
+    <section class="section" id="timeline">
+      <div class="section-title">
+        <h2>从博客到知识库。</h2>
+        <p>时间线用来解释公开表达如何逐渐变成系统，而不是展示所有私人经历。</p>
+      </div>
+      <div class="timeline" id="timelineList"></div>
+    </section>
+
+    <section class="section" id="rules">
+      <div class="section-title">
+        <h2>发布前先过一道闸。</h2>
+        <p>个人知识库真正有价值的地方，往往也是最不应该直接公开的地方。</p>
+      </div>
+      <div class="rules" id="ruleList"></div>
+    </section>
+
+    <footer class="footer">
+      <div>数据源：<code>/data/knowledge-public.json</code></div>
+      <div>更新方式：从本地私人知识库筛选公开节点，再生成本站 JSON 和页面。</div>
+    </footer>
+  </main>
+
+  <script>
+    async function loadKnowledge() {
+      const response = await fetch('/data/knowledge-public.json');
+      const data = await response.json();
+      document.title = `${data.profile.name}｜${data.profile.title}`;
+      document.querySelector('#intro').textContent = data.profile.description;
+
+      const topicCards = document.querySelector('#topicCards');
+      topicCards.innerHTML = data.topics.map((topic) => `
+        <article class="card">
+          <strong>${topic.name}</strong>
+          <p>${topic.note}</p>
+        </article>
+      `).join('');
+
+      const timelineList = document.querySelector('#timelineList');
+      timelineList.innerHTML = data.timeline.map((item) => `
+        <article class="timeline-item">
+          <time>${item.date}</time>
+          <h3>${item.title}</h3>
+          <p>${item.text}</p>
+        </article>
+      `).join('');
+
+      const ruleList = document.querySelector('#ruleList');
+      ruleList.innerHTML = data.rules.map((rule) => `<div class="rule">${rule}</div>`).join('');
+    }
+
+    loadKnowledge().catch(() => {
+      document.querySelector('#intro').textContent = '知识库公开数据暂时无法加载，请稍后再试。';
+    });
+  </script>
+</body>
+</html>

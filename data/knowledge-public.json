@@ -1,0 +1,37 @@
+{
+  "profile": {
+    "name": "香瓜",
+    "title": "个人知识库公开地图",
+    "description": "这里展示的是从私人知识库中筛选后的公开内容：主题、问题、项目和文章之间的关系。完整聊天记录和个人原始资料不公开。",
+    "updatedAt": "2026-08-19"
+  },
+  "topics": [
+    { "id": "ai", "name": "AI", "weight": 96, "type": "method", "note": "把 AI 当成外脑、协作者和工作流基础设施。" },
+    { "id": "content", "name": "自媒体", "weight": 88, "type": "practice", "note": "把观点、经验和问题转化成可传播的内容。" },
+    { "id": "ip", "name": "个人 IP", "weight": 82, "type": "strategy", "note": "用清晰定位连接能力、作品和受众。" },
+    { "id": "code", "name": "编程", "weight": 76, "type": "craft", "note": "用软件化方式沉淀工具和自动化流程。" },
+    { "id": "business", "name": "商业", "weight": 72, "type": "lens", "note": "关注需求、交易、分发和长期资产。" },
+    { "id": "self", "name": "个人事实", "weight": 64, "type": "identity", "note": "只记录可验证事实、原话和反复出现的模式。" },
+    { "id": "questions", "name": "长期问题", "weight": 58, "type": "inquiry", "note": "把反复追问的问题变成可持续研究线索。" }
+  ],
+  "links": [
+    { "source": "ai", "target": "content", "strength": 0.92, "label": "辅助选题与表达" },
+    { "source": "content", "target": "ip", "strength": 0.88, "label": "形成外部识别" },
+    { "source": "ai", "target": "code", "strength": 0.84, "label": "工具化与自动化" },
+    { "source": "business", "target": "ip", "strength": 0.78, "label": "定位与获客" },
+    { "source": "self", "target": "ip", "strength": 0.7, "label": "事实基准约束人设" },
+    { "source": "questions", "target": "content", "strength": 0.74, "label": "问题驱动内容" },
+    { "source": "business", "target": "questions", "strength": 0.6, "label": "检验真实需求" }
+  ],
+  "timeline": [
+    { "date": "2022", "title": "早期博客", "text": "原网站已有 2022 年文章沉淀，适合作为公开表达的起点。" },
+    { "date": "2026", "title": "ChatGPT 对话沉淀", "text": "大量对话可以转成私有知识库，但公开站点只展示筛选后的主题地图。" },
+    { "date": "下一步", "title": "知识库可视化", "text": "把私人资料整理成公开节点、关系、文章入口和长期问题列表。" }
+  ],
+  "rules": [
+    "不公开原始 ChatGPT 聊天记录。",
+    "不把隐私事实、凭据、未确认判断发布到 GitHub Pages。",
+    "公开页面只使用筛选、脱敏、可复查的内容。",
+    "涉及个人分析时优先读取事实基准，不从经历倒推动机。"
+  ]
+}

@@ -81,6 +81,7 @@ archives
 2022
 content.json
 index.html
+!knowledge/index.html
 db.json
 manifest.json
 node_modules/
