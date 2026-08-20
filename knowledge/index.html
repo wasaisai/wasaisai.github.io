@@ -100,6 +100,14 @@
       background: rgba(73, 81, 73, 0.18);
     }
 
+    .topic-intro {
+      max-width: 68ch;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
     .topic-chip {
       flex: 0 0 auto;
       display: inline-flex;
@@ -232,6 +240,7 @@
           <div class="topic-grid" id="topicGrid">
             <p class="topic-status">正在加载主题…</p>
           </div>
+          <p class="topic-intro" id="topicIntro"></p>
         </section>
 
         <div class="note-list">
@@ -296,9 +305,9 @@
       }).join('');
     }
 
-    function renderSelected(item) {
+    function renderSelected(item, selectedTopic) {
       document.getElementById('selectedTitle').textContent = item.title || '';
-      document.getElementById('selectedMeta').textContent = (item.category || '精选条目') + ' · ' + (item.topic || '主题');
+      document.getElementById('selectedMeta').textContent = (item.category || '精选条目') + ' · ' + (selectedTopic.name || '主题');
       document.getElementById('selectedSummary').textContent = item.summary || '';
       var article = item.article && Array.isArray(item.article.sections) ? item.article : null;
       var body = document.getElementById('selectedArticle');
@@ -335,8 +344,18 @@
       body.innerHTML = html.join('');
     }
 
+    function renderEmptyTopic(selectedTopic) {
+      document.getElementById('selectedTitle').textContent = selectedTopic.name + '文章正在整理';
+      document.getElementById('selectedMeta').textContent = selectedTopic.name + ' · 等待完整原始材料';
+      document.getElementById('selectedSummary').textContent = '这个主题已经保留入口。为了不根据零散标题推断内容，文章会在完整聊天记录整理后发布。';
+      document.getElementById('selectedArticle').innerHTML = '';
+    }
+
     function renderTopics(topics, items, selectedTopicId) {
       var grid = document.getElementById('topicGrid');
+      var selectedTopic = topics.find(function (topic) {
+        return topic.id === selectedTopicId;
+      });
       grid.innerHTML = topics.map(function (topic) {
         var count = items.filter(function (item) {
           return item.topic === topic.id;
@@ -348,6 +367,7 @@
           '<span>' + count + ' 篇</span>' +
           '</a>';
       }).join('');
+      document.getElementById('topicIntro').textContent = selectedTopic ? selectedTopic.intro || '' : '';
     }
 
     function loadKnowledge() {
@@ -358,48 +378,40 @@
         })
         .then(function (data) {
           var items = Array.isArray(data.featured) ? data.featured.slice() : [];
-          if (!items.length) {
-            items = [];
-          }
-          if (!items.length) {
-            document.getElementById('sidebarList').innerHTML = '<p class="sidebar-note">暂无精选条目。</p>';
-            return;
-          }
-
           var topics = Array.isArray(data.topics) ? data.topics.slice() : [];
+          if (!topics.length) {
+            throw new Error('No knowledge topics');
+          }
           var selectedId = getSelectedId();
           var requestedTopicId = getSelectedTopicId();
           var selected = items.find(function (item) {
             return item.id === selectedId;
           });
-          var selectedTopicId = requestedTopicId || (selected && selected.topic) || items[0].topic;
+          var requestedTopic = topics.find(function (topic) {
+            return topic.id === requestedTopicId;
+          });
+          var selectedTopicId = (requestedTopic && requestedTopic.id) || (selected && selected.topic) || topics[0].id;
           var topicItems = items.filter(function (item) {
             return item.topic === selectedTopicId;
           });
-          if (!topicItems.length) {
-            selectedTopicId = items[0].topic;
-            topicItems = items.filter(function (item) {
-              return item.topic === selectedTopicId;
-            });
-          }
           selected = topicItems.find(function (item) {
             return item.id === selectedId;
-          }) || topicItems[0];
+          }) || topicItems[0] || null;
           var topicById = topics.reduce(function (map, topic) {
             map[topic.id] = topic;
             return map;
           }, {});
-          var topicList = topics.filter(function (topic) {
-            return items.some(function (item) {
-              return item.topic === topic.id;
-            });
-          });
+          var selectedTopic = topicById[selectedTopicId];
 
           document.title = data.profile.name + ' · ' + data.profile.title;
 
-          renderSidebar(topicItems, selected.id, topicById[selectedTopicId]);
-          renderSelected(selected);
-          renderTopics(topicList, items, selectedTopicId);
+          renderSidebar(topicItems, selected ? selected.id : '', selectedTopic);
+          renderTopics(topics, items, selectedTopicId);
+          if (selected) {
+            renderSelected(selected, selectedTopic);
+          } else {
+            renderEmptyTopic(selectedTopic);
+          }
         })
         .catch(function () {
           document.getElementById('sidebarList').innerHTML = '<p class="sidebar-note">知识库数据加载失败，请稍后重试。</p>';
@@ -407,6 +419,7 @@
           document.getElementById('selectedMeta').textContent = '';
           document.getElementById('selectedSummary').textContent = '';
           document.getElementById('selectedArticle').innerHTML = '';
+          document.getElementById('topicIntro').textContent = '';
         });
     }
 
@@ -418,6 +431,8 @@
       window.history.replaceState(null, '', url.pathname + url.search);
       loadKnowledge();
     });
+
+    window.addEventListener('popstate', loadKnowledge);
 
     loadKnowledge();
   </script>
