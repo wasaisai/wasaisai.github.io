@@ -2,11 +2,13 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Publish a five-topic knowledge page containing six source-grounded frontend articles and twelve source-grounded AI articles, with accurate empty-topic and deep-article rendering.
+**Goal:** Publish a five-topic knowledge page containing six source-grounded frontend articles and twelve source-grounded AI articles, with accurate empty-topic and long-form article rendering.
 
 **Architecture:** `data/knowledge-public.json` remains the public content source and `knowledge/index.html` remains the renderer. A temporary Python contract test validates topic boundaries, article structure, privacy constraints, and page behavior before and after implementation; no test artifact is committed.
 
 **Tech Stack:** Static HTML/CSS/JavaScript, JSON, Python 3 contract tests, GitHub Pages.
+
+**Content target:** Rewrite each frontend and AI article around a core question and viewpoint. Use as much length as the argument needs—typically 1000–4000 Chinese characters—and require mechanism, step-by-step reasoning, code or scenario examples, misconceptions, engineering judgment, boundaries, and conclusion. Do not pad articles to reach a word count.
 
 ---
 
@@ -118,4 +120,3 @@ Expected: the workflow for the implementation commit reaches `completed/success`
 - [ ] **Step 4: Verify the live page and data**
 
 Fetch `https://wasaisai.github.io/data/knowledge-public.json` and `https://wasaisai.github.io/knowledge/`; confirm valid JSON, five topic names, article titles, topic introduction hook, and no stale “长期问题” content.
-
